@@ -1,6 +1,6 @@
 # mongodb
 
-## demo1
+## demo1 简单的插入和查询
 ```
 不将Age存入数据库
 Age  int    `bson:"-"`
@@ -58,3 +58,46 @@ type SingleResult struct {
 func (sr *SingleResult) Decode(v interface{}) error
 Decode will unmarshal the document represented by this SingleResult into v.
 ```
+## demo2
+```
+查询结构体中的结构体中的数据
+type Addr struct {
+	Province string `bson:"province"`
+	City     string `bson:"city"`
+}
+
+type Student struct {
+	Name    string `bson:"name"`
+	Age     int    `bson:"age"`
+	StuAddr Addr   `bson:"stuaddr"`
+	//不存入数据库时
+	//Age  int    `bson:"-"`
+}
+查询省份为广东的数据(line:81-97)
+filter := bson.D{{"stuaddr.province", "广东"}}
+```
+
+## demo3
+find可以利用map[string]interface{}作为filter来查询文档数据
+```
+利用如下方式获取数据
+data := make([]ProjectBidding, 0)
+total, err :=Query(filter, &data)
+
+data为得到的数据
+total为数据数量
+```
+查询某个范围内的数据并解析
+
+
+## demo4
+两个库
+库一：产品库
+库二：型号库
+一个产品有多个1级型号(A,B)，每个1级型号下有多个2级型号(Aa,Ab,Ba,Bb)
+1.查询总共有多少1级型号
+2.查询一个1级型号下有多少个2级型号
+3.查询一个2级型号有多少个产品
+4.查询一个1级型号下有多少个产品
+5.查询一共有多少个产品
+6.插入型号时保证每个型号的唯一性 (插入前检测是否有对应型号//如果有则报错,没有则插入)

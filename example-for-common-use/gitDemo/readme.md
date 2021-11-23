@@ -94,14 +94,15 @@ git cherry-pick <commitId>
 git remote 查看远程库名称 -v参数显示更详细的信息
 
 推送分支
-git push origin <branchname> 把该分支上的所有本地提交推送到远程库
-```
+git push origin <branchname> 把该分支上的所有本地提交推送到远程库                   
+```                                                       
 
 ## 抓取分支
 ```
+git branch -r 查看远程分支
 git clone git@github.com:michaelliao/learngit.git
 创建远程的dev分支到本地
-git checkout -b dev origin/dev
+git checkout -b dev origin/dev           
 
 推送分支
 git push origin dev 若失败表示远程分支有更新
